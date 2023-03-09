@@ -1,4 +1,4 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
 import com.example.ecommerce.domain.member.MemberEntity;
@@ -13,9 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DatabaseCleanAfterEach
 @SpringBootTest
 public class MemberStoreTest {
-
-    @Autowired
-    private MemberEntityRepository memberRepository;
 
     @Autowired
     private MemberStore memberStore;

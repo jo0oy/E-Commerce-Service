@@ -1,4 +1,4 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.common.exception.EntityNotFoundException;
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
