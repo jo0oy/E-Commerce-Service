@@ -39,9 +39,9 @@ public class MemberEntity {
         ROLE_USER("회원"),
         ROLE_PARTNER("파트너사"),
         ROLE_ADMIN("관리자");
+
         private final String description;
     }
-
     @Builder
     private MemberEntity(String username,
                          String email,
@@ -61,5 +61,14 @@ public class MemberEntity {
         this.phoneNumber = phoneNumber;
         this.membershipId = membershipId;
         this.role = (Objects.isNull(role)) ? Role.ROLE_USER : role;
+    }
+
+    public void update(String email, String phoneNumber) {
+        if(StringUtils.hasText(email)) this.email = email;
+        if(StringUtils.hasText(phoneNumber)) this.phoneNumber = phoneNumber;
+    }
+
+    public void updatePassword(String password) {
+        if(StringUtils.hasText(password)) this.password = password;
     }
 }
