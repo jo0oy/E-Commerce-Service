@@ -1,7 +1,7 @@
 package com.example.ecommerce.infrastructure.member;
 
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
-import com.example.ecommerce.member.MemberEntity;
+import com.example.ecommerce.domain.member.MemberEntity;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -43,7 +43,7 @@ class MemberRepositoryReadTest {
         var memberId = 1L;
 
         //when
-        var findMember = memberRepository.findById(memberId);
+        var findMember = memberRepository.findMemberEntityById(memberId);
 
         //then
         assertThat(findMember).isPresent();
@@ -58,7 +58,7 @@ class MemberRepositoryReadTest {
         var memberId = 10L;
 
         //when
-        var findMember = memberRepository.findById(memberId);
+        var findMember = memberRepository.findMemberEntityById(memberId);
 
         // then
         assertThat(findMember).isNotPresent();
@@ -71,7 +71,7 @@ class MemberRepositoryReadTest {
         var username = "member1";
 
         //when
-        var findMember = memberRepository.findByUsername(username);
+        var findMember = memberRepository.findMemberEntityByUsername(username);
 
         //then
         assertThat(findMember).isPresent();
@@ -86,7 +86,7 @@ class MemberRepositoryReadTest {
         var username = "notFound";
 
         //when
-        var findMember = memberRepository.findByUsername(username);
+        var findMember = memberRepository.findMemberEntityByUsername(username);
 
         // then
         assertThat(findMember).isNotPresent();

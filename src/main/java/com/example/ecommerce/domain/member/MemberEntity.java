@@ -1,20 +1,22 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.common.exception.InvalidParamException;
+import com.example.ecommerce.domain.BaseTimeEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "members")
 @Entity
-public class MemberEntity {
+public class MemberEntity extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Column(unique = true, length = 50, nullable = false, updatable = false)
@@ -33,12 +35,17 @@ public class MemberEntity {
 
     private Role role;
 
+    private boolean isDeleted;
+
+    private LocalDateTime deletedAt;
+
     @RequiredArgsConstructor
     @Getter
     public enum Role {
         ROLE_USER("회원"),
         ROLE_PARTNER("파트너사"),
         ROLE_ADMIN("관리자");
+
         private final String description;
     }
 
@@ -61,5 +68,21 @@ public class MemberEntity {
         this.phoneNumber = phoneNumber;
         this.membershipId = membershipId;
         this.role = (Objects.isNull(role)) ? Role.ROLE_USER : role;
+        this.isDeleted = false;
+        this.deletedAt = null;
+    }
+
+    public void update(String email, String phoneNumber) {
+        if(StringUtils.hasText(email)) this.email = email;
+        if(StringUtils.hasText(phoneNumber)) this.phoneNumber = phoneNumber;
+    }
+
+    public void updatePassword(String password) {
+        if(StringUtils.hasText(password)) this.password = password;
+    }
+
+    public void delete() {
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
     }
 }

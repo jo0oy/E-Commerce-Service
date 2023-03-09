@@ -1,4 +1,4 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import org.springframework.stereotype.Component;
 
