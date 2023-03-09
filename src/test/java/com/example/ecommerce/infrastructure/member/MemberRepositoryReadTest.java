@@ -43,7 +43,7 @@ class MemberRepositoryReadTest {
         var memberId = 1L;
 
         //when
-        var findMember = memberRepository.findById(memberId);
+        var findMember = memberRepository.findMemberEntityById(memberId);
 
         //then
         assertThat(findMember).isPresent();
@@ -58,7 +58,7 @@ class MemberRepositoryReadTest {
         var memberId = 10L;
 
         //when
-        var findMember = memberRepository.findById(memberId);
+        var findMember = memberRepository.findMemberEntityById(memberId);
 
         // then
         assertThat(findMember).isNotPresent();
