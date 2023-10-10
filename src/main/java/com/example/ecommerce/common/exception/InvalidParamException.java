@@ -1,8 +1,11 @@
 package com.example.ecommerce.common.exception;
 
+import com.example.ecommerce.common.code.ErrorCode;
+
 public class InvalidParamException extends RuntimeException {
+
     public InvalidParamException() {
-        super();
+        super(ErrorCode.INVALID_PARAM.getMessage());
     }
 
     public InvalidParamException(String message) {
