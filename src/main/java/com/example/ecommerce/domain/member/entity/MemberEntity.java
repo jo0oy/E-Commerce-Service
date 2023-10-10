@@ -1,7 +1,8 @@
-package com.example.ecommerce.domain.member;
+package com.example.ecommerce.domain.member.entity;
 
 import com.example.ecommerce.common.exception.InvalidParamException;
 import com.example.ecommerce.domain.BaseTimeEntity;
+import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
@@ -11,12 +12,12 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "members")
+@Table(name = "members",
+        indexes = @Index(name = "idx_username", columnList = "username", unique = true))
 @Entity
 public class MemberEntity extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
     private Long id;
 
     @Column(unique = true, length = 50, nullable = false, updatable = false)
@@ -31,13 +32,17 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(length = 60, nullable = false)
     private String phoneNumber;
 
-    private Long membershipId;
-
+    @Enumerated(EnumType.STRING)
+    @Column(updatable = false)
     private Role role;
 
     private boolean isDeleted;
 
     private LocalDateTime deletedAt;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "membership_id")
+    private MembershipEntity membership;
 
     @RequiredArgsConstructor
     @Getter
@@ -54,7 +59,7 @@ public class MemberEntity extends BaseTimeEntity {
                          String email,
                          String password,
                          String phoneNumber,
-                         Long membershipId,
+                         MembershipEntity membership,
                          Role role) {
 
         if (!StringUtils.hasText(username)) throw new InvalidParamException("empty username");
@@ -66,7 +71,7 @@ public class MemberEntity extends BaseTimeEntity {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.membershipId = membershipId;
+        this.membership = (Objects.isNull(membership)) ? MembershipEntity.create() : membership;
         this.role = (Objects.isNull(role)) ? Role.ROLE_USER : role;
         this.isDeleted = false;
         this.deletedAt = null;

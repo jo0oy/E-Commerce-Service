@@ -1,6 +1,6 @@
 package com.example.ecommerce.infrastructure.member.membership;
 
-import com.example.ecommerce.domain.member.membership.MembershipEntity;
+import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.example.ecommerce.domain.member.membership;
+package com.example.ecommerce.domain.member.membership.entity;
 
 import com.example.ecommerce.domain.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -16,9 +16,7 @@ import java.util.Objects;
 @Entity
 public class MembershipEntity extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "membership_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer totalSpending;
