@@ -1,5 +1,7 @@
-package com.example.ecommerce.domain.member.membership;
+package com.example.ecommerce.domain.member.membership.service;
 
+import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
+import com.example.ecommerce.domain.member.membership.persistence.MembershipUpdateExecutor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

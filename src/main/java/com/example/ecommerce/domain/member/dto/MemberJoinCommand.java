@@ -1,6 +1,7 @@
 package com.example.ecommerce.domain.member.dto;
 
-import com.example.ecommerce.domain.member.MemberEntity;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
+import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
 
 public record MemberJoinCommand
         (String username,
@@ -9,13 +10,13 @@ public record MemberJoinCommand
          String phoneNumber,
          MemberEntity.Role role){
 
-    public MemberEntity toEntity(Long membershipId) {
+    public MemberEntity toEntity(MembershipEntity membership) {
         return MemberEntity.builder()
                 .username(username)
                 .email(email)
                 .password(password)
                 .phoneNumber(phoneNumber)
-                .membershipId(membershipId)
+                .membership(membership)
                 .role(role)
                 .build();
     }

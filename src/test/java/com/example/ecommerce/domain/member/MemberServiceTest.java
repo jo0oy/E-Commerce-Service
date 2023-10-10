@@ -4,9 +4,11 @@ import com.example.ecommerce.common.exception.EntityNotFoundException;
 import com.example.ecommerce.common.exception.InvalidParamException;
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
 import com.example.ecommerce.domain.member.dto.MemberJoinCommand;
-import com.example.ecommerce.domain.member.dto.MemberDto;
-import com.example.ecommerce.domain.member.dto.MemberUpdateInfoCommand;
-import com.example.ecommerce.domain.member.dto.MemberUpdatePasswordCommand;
+import com.example.ecommerce.application.member.dto.MemberDto;
+import com.example.ecommerce.domain.member.dto.MemberInfoUpdateCommand;
+import com.example.ecommerce.domain.member.dto.MemberPwdUpdateCommand;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
+import com.example.ecommerce.domain.member.service.MemberService;
 import com.example.ecommerce.infrastructure.member.MemberEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,10 +96,10 @@ class MemberServiceTest {
         var memberId = 1L;
         var changeEmail = "mem1@email.com";
         var changeNum = "010-1212-1313";
-        var command = new MemberUpdateInfoCommand(memberId, changeEmail, changeNum);
+        var command = new MemberInfoUpdateCommand(changeEmail, changeNum);
 
         //when
-        memberService.update(command);
+        memberService.update(memberId, command);
 
         //then
         var findMember = memberRepository.findMemberEntityById(memberId).get();
@@ -111,11 +113,11 @@ class MemberServiceTest {
         //given
         var memberId = 1L;
         var changeEmail = "mem1@email.com";
-        var command = new MemberUpdateInfoCommand(memberId, changeEmail, null);
+        var command = new MemberInfoUpdateCommand(changeEmail, null);
         var before = memberRepository.findMemberEntityById(memberId).get();
 
         //when
-        memberService.update(command);
+        memberService.update(memberId, command);
 
         //then
         var findMember = memberRepository.findMemberEntityById(memberId).get();
@@ -129,10 +131,10 @@ class MemberServiceTest {
         //given
         var memberId = 2L;
         var changePassword = "changePassword";
-        var command = new MemberUpdatePasswordCommand(memberId, changePassword);
+        var command = new MemberPwdUpdateCommand(changePassword);
 
         //when
-        memberService.updatePassword(command);
+        memberService.updatePassword(memberId, command);
 
         //then
         var findMember = memberRepository.findMemberEntityById(memberId);

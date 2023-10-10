@@ -1,6 +1,6 @@
 package com.example.ecommerce.infrastructure.member;
 
-import com.example.ecommerce.domain.member.MemberEntity;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

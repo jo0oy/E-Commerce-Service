@@ -26,6 +26,13 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// mapstruct
+	implementation 'org.mapstruct:mapstruct:1.5.4.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.4.Final'
+
 	// testcontainers
 	testImplementation "org.testcontainers:testcontainers:1.17.6"
 	testImplementation "org.testcontainers:junit-jupiter:1.17.6"
