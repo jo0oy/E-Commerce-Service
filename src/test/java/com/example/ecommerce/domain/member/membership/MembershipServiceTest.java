@@ -1,6 +1,8 @@
 package com.example.ecommerce.domain.member.membership;
 
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
+import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
+import com.example.ecommerce.domain.member.membership.service.MembershipService;
 import com.example.ecommerce.infrastructure.member.membership.MembershipEntityRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

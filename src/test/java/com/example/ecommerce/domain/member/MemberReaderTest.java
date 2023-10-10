@@ -2,8 +2,8 @@ package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.common.exception.EntityNotFoundException;
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
-import com.example.ecommerce.domain.member.MemberEntity;
-import com.example.ecommerce.domain.member.MemberReader;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
+import com.example.ecommerce.domain.member.persistence.MemberReader;
 import com.example.ecommerce.infrastructure.member.MemberEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
