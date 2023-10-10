@@ -1,8 +1,10 @@
 package com.example.ecommerce.common.exception;
 
+import com.example.ecommerce.common.code.ErrorCode;
+
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException() {
-        super();
+        super(ErrorCode.ENTITY_NOT_FOUND.getMessage());
     }
 
     public EntityNotFoundException(String message) {

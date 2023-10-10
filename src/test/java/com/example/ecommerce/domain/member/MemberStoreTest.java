@@ -1,7 +1,8 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
-import com.example.ecommerce.infrastructure.member.MemberEntityRepository;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
+import com.example.ecommerce.domain.member.persistence.MemberStore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,9 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DatabaseCleanAfterEach
 @SpringBootTest
 public class MemberStoreTest {
-
-    @Autowired
-    private MemberEntityRepository memberRepository;
 
     @Autowired
     private MemberStore memberStore;

@@ -1,6 +1,7 @@
-package com.example.ecommerce.member;
+package com.example.ecommerce.domain.member;
 
 import com.example.ecommerce.common.exception.InvalidParamException;
+import com.example.ecommerce.domain.member.entity.MemberEntity;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
