@@ -9,15 +9,15 @@ import org.springframework.data.repository.query.Param;
 public interface MembershipEntityRepository extends JpaRepository<MembershipEntity, Long> {
 
     @Modifying(clearAutomatically = true)
-    @Query("update MembershipEntity m set m.grade = :changeTo where m.totalSpending >= :goe and m.isDeleted = false")
+    @Query("update MembershipEntity m set m.grade = :changeTo where m.totalSpending >= :goe and m.deleted = false")
     void bulkUpdateGrade(@Param("goe") int goe, @Param("changeTo") MembershipEntity.Grade changeTo);
 
     @Modifying(clearAutomatically = true)
     @Query("update MembershipEntity m set m.grade = :changeTo " +
-            "where m.totalSpending >= :goe and m.totalSpending < :lt and m.isDeleted = false")
+            "where m.totalSpending >= :goe and m.totalSpending < :lt and m.deleted = false")
     void bulkUpdateGrade(@Param("goe") int goe, @Param("lt") int lt, @Param("changeTo") MembershipEntity.Grade changeTo);
 
     @Modifying(clearAutomatically = true)
-    @Query("update MembershipEntity m set m.totalSpending = 0 where m.isDeleted = false")
+    @Query("update MembershipEntity m set m.totalSpending = 0 where m.deleted = false")
     void bulkResetTotalSpending();
 }

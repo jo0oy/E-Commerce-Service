@@ -11,16 +11,16 @@ import java.util.Optional;
 
 public interface MemberEntityRepository extends JpaRepository<MemberEntity, Long> {
 
-    @Query("select m from MemberEntity m where m.id = :id and m.isDeleted = false")
+    @Query("select m from MemberEntity m where m.id = :id and m.deleted = false")
     Optional<MemberEntity> findMemberEntityById(@Param("id") Long id);
 
-    @Query("select m from MemberEntity m where m.username = :username and m.isDeleted = false")
+    @Query("select m from MemberEntity m where m.username = :username and m.deleted = false")
     Optional<MemberEntity> findMemberEntityByUsername(@Param("username") String username);
 
-    @Query("select m from MemberEntity m join fetch m.membership where m.id = :id and m.isDeleted = false")
+    @Query("select m from MemberEntity m join fetch m.membership where m.id = :id and m.deleted = false")
     Optional<MemberEntity> findByIdFetchMembership(@Param("id") Long id);
 
-    @Query("select m from MemberEntity m join fetch m.membership where m.username = :username and m.isDeleted = false")
+    @Query("select m from MemberEntity m join fetch m.membership where m.username = :username and m.deleted = false")
     Optional<MemberEntity> findByUsernameFetchMembership(@Param("username") String username);
 
     boolean existsByUsername(String username);

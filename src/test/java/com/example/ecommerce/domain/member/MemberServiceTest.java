@@ -180,7 +180,7 @@ class MemberServiceTest {
 
         //then
         assertThat(result).isInstanceOf(MemberDto.class);
-        assertThat(result.memberId()).isEqualTo(memberId);
+        assertThat(result.getId()).isEqualTo(memberId);
     }
 
     @Test

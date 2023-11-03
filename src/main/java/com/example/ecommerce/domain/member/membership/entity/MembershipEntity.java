@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "memberships")
+@Table(name = "membership")
 @Entity
 public class MembershipEntity extends BaseTimeEntity {
 
@@ -43,7 +43,7 @@ public class MembershipEntity extends BaseTimeEntity {
         }
     }
 
-    private boolean isDeleted;
+    private boolean deleted;
 
     private LocalDateTime deletedAt;
 
@@ -53,7 +53,7 @@ public class MembershipEntity extends BaseTimeEntity {
 
         this.totalSpending = (Objects.isNull(totalSpending) || totalSpending < 0) ? 0 : totalSpending;
         this.grade = (Objects.isNull(grade)) ? Grade.SILVER : grade;
-        this.isDeleted = false;
+        this.deleted = false;
         this.deletedAt = null;
     }
 
@@ -74,7 +74,7 @@ public class MembershipEntity extends BaseTimeEntity {
     }
 
     public void delete() {
-        this.isDeleted = true;
+        this.deleted = true;
         this.deletedAt = LocalDateTime.now();
     }
 }
