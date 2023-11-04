@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "members",
+@Table(name = "member",
         indexes = @Index(name = "idx_username", columnList = "username", unique = true))
 @Entity
 public class MemberEntity extends BaseTimeEntity {
@@ -36,7 +36,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(updatable = false)
     private Role role;
 
-    private boolean isDeleted;
+    private boolean deleted;
 
     private LocalDateTime deletedAt;
 
@@ -73,7 +73,7 @@ public class MemberEntity extends BaseTimeEntity {
         this.phoneNumber = phoneNumber;
         this.membership = (Objects.isNull(membership)) ? MembershipEntity.create() : membership;
         this.role = (Objects.isNull(role)) ? Role.ROLE_USER : role;
-        this.isDeleted = false;
+        this.deleted = false;
         this.deletedAt = null;
     }
 
@@ -87,7 +87,7 @@ public class MemberEntity extends BaseTimeEntity {
     }
 
     public void delete() {
-        this.isDeleted = true;
+        this.deleted = true;
         this.deletedAt = LocalDateTime.now();
     }
 }
