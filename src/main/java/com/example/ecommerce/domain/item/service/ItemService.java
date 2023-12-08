@@ -5,6 +5,7 @@ import com.example.ecommerce.domain.item.dto.RegisterItemCommand;
 import com.example.ecommerce.domain.item.dto.UpdateItemInfoCommand;
 import com.example.ecommerce.domain.item.entity.ItemEntity;
 import com.example.ecommerce.domain.item.persistence.ItemReader;
+import com.example.ecommerce.domain.item.persistence.ItemDeleter;
 import com.example.ecommerce.domain.item.persistence.ItemStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +16,12 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Service
 public class ItemService {
 
     private final ItemStore itemStore;
     private final ItemReader itemReader;
+    private final ItemDeleter itemDeleter;
 
     @Transactional
     public Long registerItem(RegisterItemCommand command) {
@@ -53,7 +54,7 @@ public class ItemService {
 
         var item = itemReader.findById(itemId);
 
-        item.delete();
+        itemDeleter.delete(item);
     }
 
     public ItemEntity getItem(Long itemId) {
@@ -62,6 +63,7 @@ public class ItemService {
         return itemReader.findById(itemId);
     }
 
+    @Transactional(readOnly = true)
     public List<ItemEntity> getItems() {
         log.info("{}:::{}", getClass().getSimpleName(), "getItems");
         return itemReader.findAll();

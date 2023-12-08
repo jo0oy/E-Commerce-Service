@@ -17,7 +17,6 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Service
 public class MemberService {
 
@@ -64,15 +63,14 @@ public class MemberService {
         log.info("{}:::{}", getClass().getSimpleName(), "delete");
 
         // 회원 엔티티 조회
-        var member = memberReader.findByIdFetchMembership(memberId);
-        var membership = member.getMembership();
+        var member = memberReader.findById(memberId);
 
         // 삭제 로직 실행
-        membership.delete();
         member.delete();
     }
 
     // 회원 조회 by 회원 id
+    @Transactional(readOnly = true)
     public MemberEntity getMember(Long memberId) {
         log.info("{}:::{}", getClass().getSimpleName(), "getMember(Long)");
 
@@ -80,6 +78,7 @@ public class MemberService {
     }
 
     // 회원 조회 by username
+    @Transactional(readOnly = true)
     public MemberEntity getMember(String username) {
         log.info("{}:::{}", getClass().getSimpleName(), "getMember(String)");
 
@@ -87,6 +86,7 @@ public class MemberService {
     }
 
     // 모든 회원 조회
+    @Transactional(readOnly = true)
     public List<MemberEntity> getMembers() {
         log.info("{}:::{}", getClass().getSimpleName(), "getMembers");
 
