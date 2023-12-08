@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -39,10 +38,7 @@ public class ItemEntity extends BaseTimeEntity {
 
         private final String description;
 
-
     }
-    private boolean deleted;
-    private LocalDateTime deletedAt;
 
     @Builder
     private ItemEntity(String itemName,
@@ -50,19 +46,10 @@ public class ItemEntity extends BaseTimeEntity {
                        Integer stockQuantity,
                        Status status) {
 
-        if (!StringUtils.hasText(itemName))
-            throw new InvalidParamException("empty item.itemName");
-        if (Objects.isNull(itemPrice))
-            throw new InvalidParamException("invalid item.itemPrice");
-        if (Objects.isNull(stockQuantity))
-            throw new InvalidParamException("invalid item.stockQuantity");
-
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.stockQuantity = stockQuantity;
         this.status = Objects.isNull(status) ? Status.PREPARE : status;
-        this.deleted = false;
-        this.deletedAt = null;
     }
 
     public void changeStatus(Status status) {
@@ -74,10 +61,5 @@ public class ItemEntity extends BaseTimeEntity {
         if(StringUtils.hasText(itemName)) this.itemName = itemName;
         if(Objects.nonNull(itemPrice) && itemPrice >= 500) this.itemPrice = itemPrice;
         if(Objects.nonNull(stockQuantity) && stockQuantity >= 10) this.stockQuantity = stockQuantity;
-    }
-
-    public void delete() {
-        this.deleted = true;
-        this.deletedAt = LocalDateTime.now();
     }
 }
