@@ -1,6 +1,5 @@
 package com.example.ecommerce.domain.item.optionGroup;
 
-import com.example.ecommerce.common.exception.InvalidParamException;
 import com.example.ecommerce.domain.BaseTimeEntity;
 import com.example.ecommerce.domain.item.entity.ItemEntity;
 import com.example.ecommerce.domain.item.option.ItemOptionEntity;
@@ -9,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
@@ -41,10 +39,6 @@ public class ItemOptionGroupEntity extends BaseTimeEntity {
                                   Integer ordering,
                                   ItemEntity item,
                                   Set<ItemOptionEntity> itemOptions) {
-
-        if(!StringUtils.hasText(itemOptionGroupName)) throw new InvalidParamException("invalid itemOptionGroup.itemOptionGroupName");
-        if(ObjectUtils.isEmpty(ordering)) throw new InvalidParamException("invalid itemOptionGroup.ordering");
-        if(ObjectUtils.isEmpty(item)) throw new InvalidParamException("invalid itemOptionGroup.item");
 
         this.itemOptionGroupName = itemOptionGroupName;
         this.ordering = ordering;
