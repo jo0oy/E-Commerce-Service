@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class MemberReaderImpl implements MemberReader {
     @Override
     public MemberEntity findById(Long memberId) {
         log.info("{}:::{}, param value={}", getClass().getSimpleName(), "findById", memberId);
-        return memberRepository.findMemberEntityById(memberId)
+        return memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("MemberEntity Not Found!"));
     }
 
@@ -30,7 +29,7 @@ public class MemberReaderImpl implements MemberReader {
     public MemberEntity findByUsername(String username) {
         log.info("{}:::{}, param value={}", getClass().getName(), "findByUsername", username);
 
-        return memberRepository.findMemberEntityByUsername(username)
+        return memberRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("MemberEntity Not Found!"));
     }
 
@@ -61,8 +60,7 @@ public class MemberReaderImpl implements MemberReader {
     public List<MemberEntity> findAll() {
         log.info("{}:::{}", getClass().getSimpleName(), "findAll");
 
-        return memberRepository.findAll().stream()
-                .filter(m -> !m.isDeleted()).collect(Collectors.toList());
+        return memberRepository.findAll();
     }
 
     @Override
