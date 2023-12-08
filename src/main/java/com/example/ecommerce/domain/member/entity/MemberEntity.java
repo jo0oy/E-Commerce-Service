@@ -1,9 +1,10 @@
 package com.example.ecommerce.domain.member.entity;
 
-import com.example.ecommerce.common.exception.InvalidParamException;
+import com.example.ecommerce.common.utils.TokenGenerator;
 import com.example.ecommerce.domain.BaseTimeEntity;
 import com.example.ecommerce.domain.member.membership.entity.MembershipEntity;
 import lombok.*;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -12,13 +13,24 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deleted = false")
 @Table(name = "member",
-        indexes = @Index(name = "idx_username", columnList = "username", unique = true))
+    indexes =
+        {
+            @Index(name = "idx_username", columnList = "username", unique = true),
+            @Index(name = "idx_member_token", columnList = "memberToken", unique = true)
+        }
+)
 @Entity
 public class MemberEntity extends BaseTimeEntity {
 
+    private static final String MEMBER_PREFIX = "mem_";
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 100, nullable = false, updatable = false)
+    private String memberToken;
 
     @Column(unique = true, length = 50, nullable = false, updatable = false)
     private String username;
@@ -36,7 +48,7 @@ public class MemberEntity extends BaseTimeEntity {
     @Column(updatable = false)
     private Role role;
 
-    private boolean deleted;
+    private Boolean deleted;
 
     private LocalDateTime deletedAt;
 
@@ -62,11 +74,7 @@ public class MemberEntity extends BaseTimeEntity {
                          MembershipEntity membership,
                          Role role) {
 
-        if (!StringUtils.hasText(username)) throw new InvalidParamException("empty username");
-        if (!StringUtils.hasText(email)) throw new InvalidParamException("empty email");
-        if (!StringUtils.hasText(password)) throw new InvalidParamException("empty password");
-        if (!StringUtils.hasText(phoneNumber)) throw new InvalidParamException("empty phoneNumber");
-
+        this.memberToken = TokenGenerator.randomCharacterWithPrefix(MEMBER_PREFIX);
         this.username = username;
         this.email = email;
         this.password = password;
@@ -89,5 +97,9 @@ public class MemberEntity extends BaseTimeEntity {
     public void delete() {
         this.deleted = true;
         this.deletedAt = LocalDateTime.now();
+    }
+
+    public Boolean isDeleted() {
+        return deleted && Objects.nonNull(deletedAt);
     }
 }
