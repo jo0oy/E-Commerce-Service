@@ -33,6 +33,9 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.4.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.4.Final'
 
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation 'org.apache.commons:commons-lang3:3.13.0'
+
 	// testcontainers
 	testImplementation "org.testcontainers:testcontainers:1.17.6"
 	testImplementation "org.testcontainers:junit-jupiter:1.17.6"
