@@ -18,17 +18,17 @@ public class ItemReaderImpl implements ItemReader {
 
     @Override
     public ItemEntity findById(Long id) {
-        return itemEntityRepository.findByIdAndDeletedIsFalse(id)
+        return itemEntityRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public List<ItemEntity> findAll() {
-        return itemEntityRepository.findAllByDeletedIsFalse();
+        return itemEntityRepository.findAll();
     }
 
     @Override
     public Page<ItemEntity> findAll(Pageable pageable) {
-        return null;
+        return itemEntityRepository.findAll(pageable);
     }
 }

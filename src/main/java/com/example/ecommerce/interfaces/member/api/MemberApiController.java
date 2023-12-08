@@ -7,11 +7,11 @@ import com.example.ecommerce.interfaces.member.dto.request.MemberInfoUpdateReque
 import com.example.ecommerce.interfaces.member.dto.request.MemberJoinRequestDto;
 import com.example.ecommerce.interfaces.member.dto.request.MemberPwdUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")
@@ -26,7 +26,7 @@ public class MemberApiController {
         var data = memberFacade.join(memberDtoMapper.of(requestDto));
 
         return ResponseEntity
-                .created(URI.create("/api/v1/members"))
+                .status(HttpStatus.CREATED)
                 .body(ApiUtils.success(memberDtoMapper.of(data)));
     }
 

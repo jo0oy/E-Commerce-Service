@@ -45,7 +45,6 @@ class ItemReaderTest {
 
         // then
         assertThat(itemEntity.getId()).isEqualTo(itemId);
-        assertThat(itemEntity.isDeleted()).isFalse();
     }
 
     @Test

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -43,18 +42,12 @@ public class MembershipEntity extends BaseTimeEntity {
         }
     }
 
-    private boolean deleted;
-
-    private LocalDateTime deletedAt;
-
     @Builder
     private MembershipEntity(Integer totalSpending,
                              Grade grade) {
 
         this.totalSpending = (Objects.isNull(totalSpending) || totalSpending < 0) ? 0 : totalSpending;
         this.grade = (Objects.isNull(grade)) ? Grade.SILVER : grade;
-        this.deleted = false;
-        this.deletedAt = null;
     }
 
     // 멤버십 초기 생성 메서드
@@ -65,16 +58,11 @@ public class MembershipEntity extends BaseTimeEntity {
                 .build();
     }
 
-    public void addTotalSpending(int spending) {
+    public void addTotalSpending(Integer spending) {
         this.totalSpending += spending;
     }
 
-    public void minusTotalSpending(int spending) {
+    public void minusTotalSpending(Integer spending) {
         this.totalSpending -= spending;
-    }
-
-    public void delete() {
-        this.deleted = true;
-        this.deletedAt = LocalDateTime.now();
     }
 }
