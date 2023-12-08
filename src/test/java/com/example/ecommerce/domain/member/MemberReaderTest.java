@@ -90,6 +90,34 @@ class MemberReaderTest {
     }
 
     @Test
+    void findByIdFetchMembership_성공_테스트() {
+        //given
+        var memberId = 1L;
+
+        //when
+        var findMember = memberReader.findByIdFetchMembership(memberId);
+
+        //then
+        assertThat(findMember).isNotNull();
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+        assertThat(findMember.getMembership()).isNotNull();
+    }
+
+    @Test
+    void findByUsernameFetchMembership_성공_테스트() {
+        //given
+        var username = "member1";
+
+        //when
+        var findMember = memberReader.findByUsernameFetchMembership(username);
+
+        //then
+        assertThat(findMember).isNotNull();
+        assertThat(findMember.getUsername()).isEqualTo(username);
+        assertThat(findMember.getMembership()).isNotNull();
+    }
+
+    @Test
     void findAll() {
         //given
 

@@ -130,9 +130,7 @@ class ItemServiceTest {
         // then
         Optional<ItemEntity> deletedItem = itemEntityRepository.findById(deleteId);
 
-        assertThat(deletedItem).isPresent();
-        assertThat(deletedItem.get().isDeleted()).isTrue();
-        assertThat(deletedItem.get().getDeletedAt()).isNotNull();
+        assertThat(deletedItem).isNotPresent();
     }
 
     @Test

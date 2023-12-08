@@ -3,9 +3,8 @@ package com.example.ecommerce.domain.member;
 import com.example.ecommerce.common.exception.EntityNotFoundException;
 import com.example.ecommerce.common.exception.InvalidParamException;
 import com.example.ecommerce.config.DatabaseCleanAfterEach;
-import com.example.ecommerce.domain.member.dto.MemberJoinCommand;
-import com.example.ecommerce.application.member.dto.MemberDto;
 import com.example.ecommerce.domain.member.dto.MemberInfoUpdateCommand;
+import com.example.ecommerce.domain.member.dto.MemberJoinCommand;
 import com.example.ecommerce.domain.member.dto.MemberPwdUpdateCommand;
 import com.example.ecommerce.domain.member.entity.MemberEntity;
 import com.example.ecommerce.domain.member.service.MemberService;
@@ -62,7 +61,7 @@ class MemberServiceTest {
         var savedId = memberService.join(memberCommand);
 
         // then
-        var savedMember = memberRepository.findMemberEntityById(savedId);
+        var savedMember = memberRepository.findById(savedId);
 
         assertThat(savedId).isGreaterThan(5L);
         assertThat(savedMember).isPresent();
@@ -70,7 +69,7 @@ class MemberServiceTest {
         var member = savedMember.get();
         assertThat(member.getUsername()).isEqualTo(username);
         assertThat(member.getRole()).isEqualTo(MemberEntity.Role.ROLE_USER);
-        assertThat(member.isDeleted()).isFalse();
+        assertThat(member.getDeleted()).isFalse();
     }
 
     @Test
@@ -102,7 +101,7 @@ class MemberServiceTest {
         memberService.update(memberId, command);
 
         //then
-        var findMember = memberRepository.findMemberEntityById(memberId).get();
+        var findMember = memberRepository.findById(memberId).get();
 
         assertThat(findMember.getEmail()).isEqualTo(changeEmail);
         assertThat(findMember.getPhoneNumber()).isEqualTo(changeNum);
@@ -114,13 +113,13 @@ class MemberServiceTest {
         var memberId = 1L;
         var changeEmail = "mem1@email.com";
         var command = new MemberInfoUpdateCommand(changeEmail, null);
-        var before = memberRepository.findMemberEntityById(memberId).get();
+        var before = memberRepository.findById(memberId).get();
 
         //when
         memberService.update(memberId, command);
 
         //then
-        var findMember = memberRepository.findMemberEntityById(memberId).get();
+        var findMember = memberRepository.findById(memberId).get();
 
         assertThat(findMember.getEmail()).isEqualTo(changeEmail);
         assertThat(findMember.getPhoneNumber()).isEqualTo(before.getPhoneNumber());
@@ -137,7 +136,7 @@ class MemberServiceTest {
         memberService.updatePassword(memberId, command);
 
         //then
-        var findMember = memberRepository.findMemberEntityById(memberId);
+        var findMember = memberRepository.findById(memberId);
 
         assertThat(findMember).isPresent();
         assertThat(findMember.get().getPassword()).isEqualTo(changePassword);
@@ -152,11 +151,9 @@ class MemberServiceTest {
         memberService.delete(memberId);
 
         //then
-        var findMember = memberRepository.findMemberEntityById(memberId);
+        var findMember = memberRepository.findById(memberId);
 
-        assertThat(findMember).isPresent();
-        assertThat(findMember.get().isDeleted()).isTrue();
-        assertThat(findMember.get().getDeletedAt()).isNotNull();
+        assertThat(findMember).isNotPresent();
     }
 
     @Test
@@ -179,7 +176,7 @@ class MemberServiceTest {
         var result = memberService.getMember(memberId);
 
         //then
-        assertThat(result).isInstanceOf(MemberDto.class);
+        assertThat(result).isInstanceOf(MemberEntity.class);
         assertThat(result.getId()).isEqualTo(memberId);
     }
 
